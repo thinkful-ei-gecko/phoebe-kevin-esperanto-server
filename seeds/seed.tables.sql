@@ -17,18 +17,27 @@ VALUES
 
 INSERT INTO "language" ("id", "name", "user_id")
 VALUES
-  (1, 'French', 1);
+  (1, 'Esperanto', 1);
 
 INSERT INTO "word" ("id", "language_id", "original", "translation", "next")
 VALUES
-  (1, 1, 'entraine toi', 'practice', 2),
-  (2, 1, 'bonjour', 'hello', 3),
-  (3, 1, 'maison', 'house', 4),
-  (4, 1, 'développeur', 'developer', 5),
-  (5, 1, 'traduire', 'translate', 6),
-  (6, 1, 'incroyable', 'amazing', 7),
-  (7, 1, 'chien', 'dog', 8),
-  (8, 1, 'chat', 'cat', null);
+  (1, 1, 'Saluton! Kiel vi fartas?', 'Hi! How are you?', 2),
+  (2, 1, 'Tre bone, dankon.', `I'm good, thanks.`, 3),
+  (3, 1, 'Nia nomo estas...', 'My name is...', 4),
+  (4, 1, 'Kie estas la necesejo?', 'Where is the bathroom?', 5),
+  (5, 1, 'Kie mi povas aĉeti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6),
+  (6, 1, 'Voku la policon!', 'Call the police!', 7),
+  (7, 1, 'Mi volas unon biron.', 'I want a beer.', 8),
+  (8, 1, 'Jes', 'Yes', 9),
+  (9, 1, 'Ne', 'No', 10),
+  (10, 1, 'Mi ne scias.', `I don't know.`, 11),
+  (11, 1, 'Dekstra', 'Right', 12),
+  (12, 1, 'Maldekstra', 'Left', 13),
+  (13, 1, 'Rekte', 'Ahead', 14),
+  (14, 1, 'Helpon!', 'Help!', 15),
+  (15, 1, 'Fajon!', 'Fire!', 16),
+  (16, 1, 'Voku ambulancon.', 'Call an ambulance.', 17),
+  (17, 1, 'Pafilo!', 'Gun!', null);
 
 UPDATE "language" SET head = 1 WHERE id = 1;
 

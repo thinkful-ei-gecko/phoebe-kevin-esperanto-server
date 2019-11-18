@@ -45,7 +45,7 @@ const UserService = {
     return db.transaction(async (trx) => {
       const [languageId] = await trx
         .into('language')
-        .insert([{ name: 'French', user_id }], ['id']);
+        .insert([{ name: 'Esperanto', user_id }], ['id']);
 
       // when inserting words,
       // we need to know the current sequence number
@@ -56,14 +56,23 @@ const UserService = {
         .first();
 
       const languageWords = [
-        ['entraine toi', 'practice', 2],
-        ['bonjour', 'hello', 3],
-        ['maison', 'house', 4],
-        ['développeur', 'developer', 5],
-        ['traduire', 'translate', 6],
-        ['incroyable', 'amazing', 7],
-        ['chien', 'dog', 8],
-        ['chat', 'cat', null],
+        ['Saluton! Kiel vi fartas?', 'Hi! How are you?', 2],
+        ['Tre bone, dankon.', `I'm good, thanks.`, 3],
+        ['Nia nomo estas...', 'My name is...', 4],
+        ['Kie estas la necesejo?', 'Where is the bathroom?', 5],
+        ['Kie mi povas aĉeti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6],
+        ['Voku la policon!', 'Call the police!', 7],
+        ['Mi volas unon biron.', 'I want a beer.', 8],
+        ['Jes', 'Yes', 9],
+        ['Ne', 'No', 10],
+        [ 'Mi ne scias.', `I don't know.`, 11],
+        [ 'Dekstra', 'Right', 12],
+        [ 'Maldekstra', 'Left', 13],
+        [ 'Rekte', 'Ahead', 14],
+        [ 'Helpon!', 'Help!', 15],
+        [ 'Fajon!', 'Fire!', 16],
+        [ 'Voku ambulancon.', 'Call an ambulance.', 17],
+        [ 'Pafilo!', 'Gun!', null],
       ];
 
       const [languageHeadId] = await trx.into('word').insert(
