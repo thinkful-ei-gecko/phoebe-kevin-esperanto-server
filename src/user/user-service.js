@@ -57,7 +57,7 @@ const UserService = {
 
       const languageWords = [
         ['Saluton! Kiel vi fartas?', 'Hi! How are you?', 2],
-        ['Tre bone, dankon.', `I'm good, thanks.`, 3],
+        ['Tre bone, dankon.', 'I\'m good, thanks.', 3],
         ['Nia nomo estas...', 'My name is...', 4],
         ['Kie estas la necesejo?', 'Where is the bathroom?', 5],
         ['Kie mi povas aĉeti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6],
@@ -65,7 +65,7 @@ const UserService = {
         ['Mi volas unon biron.', 'I want a beer.', 8],
         ['Jes', 'Yes', 9],
         ['Ne', 'No', 10],
-        [ 'Mi ne scias.', `I don't know.`, 11],
+        [ 'Mi ne scias.', 'I don\'t know.', 11],
         [ 'Dekstra', 'Right', 12],
         [ 'Maldekstra', 'Left', 13],
         [ 'Rekte', 'Ahead', 14],

@@ -178,7 +178,7 @@ describe('User Endpoints', function() {
           total_score: 0,
           words: [
             { original: 'Saluton! Kiel vi fartas?', translation: 'Hi! How are you?' },
-            { original: 'Tre bone, dankon.', translation: `I'm good, thanks.` },
+            { original: 'Tre bone, dankon.', translation: 'I\'m good, thanks.' },
             { original: 'Nia nomo estas...', translation: 'My name is...' },
             { original: 'Kie estas la necesejo?', translation: 'Where is the bathroom?' },
             { original: 'Kie mi povas aĉeti trinkeblan botelojn de akvo?', translation: 'Where can I buy clean bottled water?' },
@@ -186,7 +186,7 @@ describe('User Endpoints', function() {
             { original: 'Mi volas unon biron.', translation: 'I want a beer.' },
             { original: 'Jes', translation: 'Yes' },
             { original: 'Ne', translation: 'No' },
-            { original: 'Mi ne scias.', translation: `I don't know.` },
+            { original: 'Mi ne scias.', translation: 'I don\'t know.' },
             { original: 'Dekstra', translation: 'Right' },
             { original: 'Maldekstra', translation: 'Left' },
             { original: 'Rekte', translation: 'Ahead' },

@@ -22,7 +22,7 @@ VALUES
 INSERT INTO "word" ("id", "language_id", "original", "translation", "next")
 VALUES
   (1, 1, 'Saluton! Kiel vi fartas?', 'Hi! How are you?', 2),
-  (2, 1, 'Tre bone, dankon.', `I'm good, thanks.`, 3),
+  (2, 1, 'Tre bone, dankon.', 'I''m good, thanks.', 3),
   (3, 1, 'Nia nomo estas...', 'My name is...', 4),
   (4, 1, 'Kie estas la necesejo?', 'Where is the bathroom?', 5),
   (5, 1, 'Kie mi povas aĉeti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6),
@@ -30,7 +30,7 @@ VALUES
   (7, 1, 'Mi volas unon biron.', 'I want a beer.', 8),
   (8, 1, 'Jes', 'Yes', 9),
   (9, 1, 'Ne', 'No', 10),
-  (10, 1, 'Mi ne scias.', `I don't know.`, 11),
+  (10, 1, 'Mi ne scias.', 'I don''t know.', 11),
   (11, 1, 'Dekstra', 'Right', 12),
   (12, 1, 'Maldekstra', 'Left', 13),
   (13, 1, 'Rekte', 'Ahead', 14),
