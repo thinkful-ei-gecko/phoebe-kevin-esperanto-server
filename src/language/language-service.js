@@ -28,6 +28,20 @@ const LanguageService = {
       )
       .where({ language_id });
   },
+
+  getNextWord(db, language_id) {
+    return db
+      .select(
+        'word.original',
+        'language.total_score',
+        'word.correct_count',
+        'word.incorrect_count',
+      )
+      .from('word')
+      .join('language', 'language.user_id', 'language_id')
+      .where({ language_id })
+      .first();
+  }
 };
 
 module.exports = LanguageService;
