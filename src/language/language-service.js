@@ -1,4 +1,16 @@
 const LanguageService = {
+  updateHead(db, id, head) {
+    return db('language')
+      .where({ id })
+      .update({ head });
+  },
+
+  updateWord(db, id, next) {
+    return db('word')
+      .where({ id })
+      .update({ next });
+  },
+
   getUsersLanguage(db, user_id) {
     return db
       .from('language')
@@ -26,6 +38,7 @@ const LanguageService = {
         'correct_count',
         'incorrect_count'
       )
+      .orderBy('next')
       .where({ language_id });
   },
 
@@ -35,13 +48,13 @@ const LanguageService = {
         'word.original',
         'language.total_score',
         'word.correct_count',
-        'word.incorrect_count',
+        'word.incorrect_count'
       )
       .from('word')
       .join('language', 'language.user_id', 'language_id')
       .where({ language_id })
       .first();
-  }
+  },
 };
 
 module.exports = LanguageService;
