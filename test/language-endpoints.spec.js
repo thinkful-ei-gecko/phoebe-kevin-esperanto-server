@@ -121,7 +121,7 @@ describe.only('Language Endpoints', function() {
   /**
    * @description Submit a new guess for the language
    **/
-  describe.only('POST /api/language/guess', () => {
+  describe('POST /api/language/guess', () => {
     const [testLanguage] = testLanguages;
     const testLanguagesWords = testWords.filter((w) => w.language_id === testLanguage.id);
 
@@ -164,7 +164,7 @@ describe.only('Language Endpoints', function() {
           });
       });
 
-      it.only('moves the word 1 space and updates incorrect count', async () => {
+      it('moves the word 1 space and updates incorrect count', async () => {
         await supertest(app)
           .post('/api/language/guess')
           .set('Authorization', helpers.makeAuthHeader(testUser))

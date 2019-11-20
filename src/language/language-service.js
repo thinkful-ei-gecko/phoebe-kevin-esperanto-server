@@ -1,14 +1,17 @@
 const LanguageService = {
-  updateHead(db, id, head) {
-    return db('language')
+  updateRow(db, table, id, updateFields) {
+    return db(table)
       .where({ id })
-      .update({ head });
+      .update({ ...updateFields });
   },
 
-  updateWord(db, id, next) {
-    return db('word')
+  getWord(db, id, language_id) {
+    return db
+      .from('word')
+      .select('*')
       .where({ id })
-      .update({ next });
+      .where({ language_id })
+      .first();
   },
 
   getUsersLanguage(db, user_id) {
@@ -38,7 +41,6 @@ const LanguageService = {
         'correct_count',
         'incorrect_count'
       )
-      .orderBy('next')
       .where({ language_id });
   },
 

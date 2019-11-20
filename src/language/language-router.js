@@ -1,11 +1,8 @@
 const express = require('express');
 const LanguageService = require('./language-service');
 const { requireAuth } = require('../middleware/jwt-auth');
-const LinkedList = require('../util/linked-list');
 const languageRouter = express.Router();
 const jsonParser = express.json();
-
-const wordsLL = new LinkedList();
 
 languageRouter.use(requireAuth).use(async (req, res, next) => {
   try {
@@ -20,19 +17,6 @@ languageRouter.use(requireAuth).use(async (req, res, next) => {
       });
 
     req.language = language;
-
-    const words = await LanguageService.getLanguageWords(
-      req.app.get('db'),
-      req.language.id
-    );
-
-    wordsLL.head = null;
-    for (let i = 0; i < words.length; i++) {
-      wordsLL.insertLast(words[i]);
-    }
-
-    // wordsLL.display();
-
     next();
   } catch (error) {
     next(error);
@@ -81,59 +65,88 @@ languageRouter.post('/guess', jsonParser, async (req, res, next) => {
     return res.status(400).json({ error: `Missing 'guess' in request body` });
   }
 
-  let currNode = wordsLL.head;
-  let nextNode = currNode.next;
-  let word = currNode.value;
-  let answer = word.translation;
-  let isCorrect;
-
   try {
+    let currHeadId = req.language.head;
+    let currWord = await LanguageService.getWord(
+      req.app.get('db'),
+      currHeadId,
+      req.language.id
+    );
+    let answer = currWord.translation;
+    let isCorrect;
+
     if (answer !== guess) {
-      word.memory_value = 1;
-      // word.incorrect_count++;
+      currWord.memory_value = 1;
+      currWord.incorrect_count++;
       isCorrect = false;
     } else {
-      word.memory_value *= 2;
-      // word.correct_count++;
+      currWord.memory_value *= 2;
+      currWord.correct_count++;
+      req.language.total_score++;
       isCorrect = true;
     }
 
-    if (word.memory_value === 1) {
-      currNode.next = nextNode.next;
-      nextNode.next = currNode;
-      wordsLL.head = nextNode;
-    } else {
-      let count = 2;
-      while (currNode.next !== null) {
-        nextNode = currNode.next;
-        if (count === word.memory_value) {
-          currNode.next = nextNode.next;
-          nextNode.next = currNode;
-          wordsLL.head = nextNode;
-          break;
-        }
-        currNode = currNode.next;
-        count++;
-      }
+    const wordsArr = [];
+    const tempArr = await LanguageService.getLanguageWords(
+      req.app.get('db'),
+      req.language.id
+    );
+    wordsArr[0] = currWord;
+    for (let i = 1; i < tempArr.length; i++) {
+      const previousElement = wordsArr[i - 1];
+      const nextWord = await LanguageService.getWord(
+        req.app.get('db'),
+        previousElement.next,
+        req.language.id
+      );
+      wordsArr.push(nextWord);
     }
 
-    LanguageService.updateHead(req.app.get('db'), req.language.id, wordsLL.head.value.id);
-    LanguageService.updateWord(
+    const wordToInsertAfter = wordsArr[currWord.memory_value];
+    currWord.next = wordToInsertAfter.next;
+    wordToInsertAfter.next = currWord.id;
+
+    // CREATE UPDATE FIELDS
+    let currWord_updateFields = {
+      memory_value: currWord.memory_value,
+      incorrect_count: currWord.incorrect_count,
+      correct_count: currWord.correct_count,
+      next: currWord.next,
+    };
+    let wordToInsertAfter_updateFields = {
+      next: wordToInsertAfter.next,
+    };
+    // set head to next word (second element of array)
+    let language_updateFields = {
+      head: wordsArr[1].id,
+      total_score: req.language.total_score,
+    };
+
+    // UPDATE DATABASE
+    await LanguageService.updateRow(
       req.app.get('db'),
-      currNode.value.id,
-      currNode.next.value.id
+      'word',
+      currWord.id,
+      currWord_updateFields
     );
-    LanguageService.updateWord(
+    await LanguageService.updateRow(
       req.app.get('db'),
-      nextNode.value.id,
-      nextNode.next.value.id
+      'word',
+      wordToInsertAfter.id,
+      wordToInsertAfter_updateFields
+    );
+    await LanguageService.updateRow(
+      req.app.get('db'),
+      'language',
+      req.language.id,
+      language_updateFields
     );
 
-    res.json({
-      nextWord: wordsLL.head.value.original,
-      totalScore: 0,
-      wordCorrectCount: isCorrect ? word.correct_count++ : word.correct_count,
-      wordIncorrectCount: !isCorrect ? word.incorrect_count++ : word.incorrect_count,
+    return res.json({
+      nextWord: wordsArr[1].original,
+      totalScore: req.language.total_score,
+      wordCorrectCount: wordsArr[1].correct_count,
+      wordIncorrectCount: wordsArr[1].incorrect_count,
       answer,
       isCorrect,
     });
