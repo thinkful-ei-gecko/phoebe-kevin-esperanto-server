@@ -75,7 +75,10 @@ languageRouter.post('/guess', jsonParser, async (req, res, next) => {
     let answer = currWord.translation;
     let isCorrect;
 
-    if (answer !== guess) {
+    let _answerMod = answer.replace(/[^A-Za-z0-9_]/g, '').toLowerCase();
+    let _guessMod = guess.replace(/[^A-Za-z0-9_]/g, '').toLowerCase();
+
+    if (_answerMod !== _guessMod) {
       currWord.memory_value = 1;
       currWord.incorrect_count++;
       isCorrect = false;
