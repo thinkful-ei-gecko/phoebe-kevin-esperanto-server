@@ -107,6 +107,11 @@ languageRouter.post('/guess', jsonParser, async (req, res, next) => {
       wordsArr.push(nextWord);
     }
 
+    // if memory_value exceeds the size of the array, set it to the last
+    if (currWord.memory_value > wordsArr.length) {
+      currWord.memory_value = wordsArr.length - 1;
+    }
+
     const wordToInsertAfter = wordsArr[currWord.memory_value];
     currWord.next = wordToInsertAfter.next;
     wordToInsertAfter.next = currWord.id;
