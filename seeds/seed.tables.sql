@@ -25,7 +25,7 @@ VALUES
   (2, 1, 'Tre bone, dankon.', 'I''m good, thanks.', 3),
   (3, 1, 'Mia nomo estas...', 'My name is...', 4),
   (4, 1, 'Kie estas la necesejo?', 'Where is the bathroom?', 5),
-  (5, 1, 'Kie mi povas a\u0109eti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6),
+  (5, 1, 'Kie mi povas a&#265;eti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6),
   (6, 1, 'Voku la policon!', 'Call the police!', 7),
   (7, 1, 'Mi volas unon biron.', 'I want a beer.', 8),
   (8, 1, 'Jes', 'Yes', 9),

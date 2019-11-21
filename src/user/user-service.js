@@ -60,7 +60,7 @@ const UserService = {
         ['Tre bone, dankon.', 'I\'m good, thanks.', 3],
         ['Mia nomo estas...', 'My name is...', 4],
         ['Kie estas la necesejo?', 'Where is the bathroom?', 5],
-        ['Kie mi povas a\u0109eti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6],
+        ['Kie mi povas a&#265;eti trinkeblan botelojn de akvo?', 'Where can I buy clean bottled water?', 6],
         ['Voku la policon!', 'Call the police!', 7],
         ['Mi volas unon biron.', 'I want a beer.', 8],
         ['Jes', 'Yes', 9],

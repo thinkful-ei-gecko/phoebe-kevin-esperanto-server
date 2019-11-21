@@ -181,7 +181,7 @@ describe('User Endpoints', function() {
             { original: 'Tre bone, dankon.', translation: 'I\'m good, thanks.' },
             { original: 'Mia nomo estas...', translation: 'My name is...' },
             { original: 'Kie estas la necesejo?', translation: 'Where is the bathroom?' },
-            { original: 'Kie mi povas a\u0109eti trinkeblan botelojn de akvo?', translation: 'Where can I buy clean bottled water?' },
+            { original: 'Kie mi povas a&#265;eti trinkeblan botelojn de akvo?', translation: 'Where can I buy clean bottled water?' },
             { original: 'Voku la policon!', translation: 'Call the police!' },
             { original: 'Mi volas unon biron.', translation: 'I want a beer.' },
             { original: 'Jes', translation: 'Yes' },
