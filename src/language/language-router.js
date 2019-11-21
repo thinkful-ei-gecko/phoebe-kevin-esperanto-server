@@ -42,16 +42,18 @@ languageRouter.get('/', async (req, res, next) => {
 
 languageRouter.get('/head', async (req, res, next) => {
   try {
-    const nextWord = await LanguageService.getNextWord(
+    let currHeadId = req.language.head;
+    let currWord = await LanguageService.getWord(
       req.app.get('db'),
+      currHeadId,
       req.language.id
     );
 
     res.json({
-      nextWord: nextWord.original,
-      totalScore: nextWord.total_score,
-      wordCorrectCount: nextWord.correct_count,
-      wordIncorrectCount: nextWord.incorrect_count,
+      nextWord: currWord.original,
+      totalScore: req.language.total_score,
+      wordCorrectCount: currWord.correct_count,
+      wordIncorrectCount: currWord.incorrect_count,
     });
     next();
   } catch (error) {
