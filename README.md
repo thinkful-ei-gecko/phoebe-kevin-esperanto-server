@@ -1,50 +1,103 @@
-# Spaced repetition API!
+# Iranta - Server
 
-## Local dev setup
+This is the server code repository for Iranta, a full stack web app by **Kevin Wei** & **Phoebe Law** for learning Esperanto through the spaced repetition algorithm.
 
-```bash
-mv example.env .env
-createdb -U cap2 esperanto
-createdb -U cap2 esperanto-test
+- [Link to Live App](https://iranta.now.sh/)
+- [Link to Client Repo](https://github.com/thinkful-ei-gecko/phoebe-kevin-esperanto-client)
+
+## API Endpoints
+
+### `GET /api/language`
+
+Returns a JSON object for the language matching the currently logged in user's id, and an array containing all of the words for that language.
+
+**Example response**
+
+```JSON
+{
+  "language": {
+    "id": 1,
+    "name": "Esperanto",
+    "user_id": 1,
+    "head": 5,
+    "total_score": 20
+  },
+  "words": [
+    {
+      "id": 11,
+      "language_id": 1,
+      "original": "Dekstra",
+      "translation": "Right",
+      "next": 12,
+      "memory_value": 1,
+      "correct_count": 0,
+      "incorrect_count": 0
+    }
+  ]
+}
 ```
 
-If your `cap2` user has a password be sure to set it in `.env` for all appropriate fields. Or if using a different user, update appropriately.
+#### language
 
-```bash
-npm install
-npm run migrate
-env MIGRATION_DB_NAME=esperanto-test npm run migrate
+- **`id`**`- integer` - id of user's language
+- **`name`**`- string` - name of user's language
+- **`user_id`**`- integer` - id of currently logged in user
+- **`head`**`- integer` - id of the first word in the sequenced list of words
+- **`total_score`**`- integer` - total words answered correctly
+
+#### words
+
+- **`id`**`- integer` - id of word
+- **`language_id`**`- integer` - id of the language that this word belongs to
+- **`original`**`- string` - the word or phrase in the foreign language
+- **`translation`**`- string` - the word or phrase in English
+- **`next`**`- integer` - id of the next word in the sequenced list
+- **`memory_value`**`- integer` - number used for determining how many spaces down the sequenced list to put the word (this makes up the core of spaced repetition)
+- **`correct_count`**`- integer` - how many times this word was answered correctly
+- **`incorrect_count`**`- integer` - how many times this word was answered incorrectly
+
+### `POST /api/language/guess`
+
+The user submits a guess for the current word at the head of the sequenced list. The server responds with a JSON object containing the answer as well as the data for the _next_ word.
+
+**Example request**
+
+```JSON
+{
+  "guess": "Right"
+}
 ```
 
-And `npm test` should work at this point
+**Example response**
 
-## Configuring Postgres
-
-For tests involving time to run properly, configure your Postgres database to run in the UTC timezone.
-
-1. Locate the `postgresql.conf` file for your Postgres installation.
-   1. E.g. for an OS X, Homebrew install: `/usr/local/var/postgres/postgresql.conf`
-   2. E.g. on Windows, _maybe_: `C:\Program Files\PostgreSQL\11.2\data\postgresql.conf`
-   3. E.g  on Ubuntu 18.04 probably: '/etc/postgresql/10/main/postgresql.conf'
-2. Find the `timezone` line and set it to `UTC`:
-
-```conf
-# - Locale and Formatting -
-
-datestyle = 'iso, mdy'
-#intervalstyle = 'postgres'
-timezone = 'UTC'
-#timezone_abbreviations = 'Default'     # Select the set of available time zone
+```JSON
+{
+  "nextWord": 12,
+  "totalScore": 21,
+  "wordCorrectCount": 0,
+  "wordIncorrectCount": 0,
+  "answer": "Right",
+  "isCorrect": true
+}
 ```
 
-## Scripts
+- **`nextWord`**`- integer` - id of the next word in the sequenced list
+- **`totalScore`**`- integer` - total words answered correctly
+- **`wordCorrectCount`**`- integer` - how many times the _next_ word was answered correctly
+- **`wordIncorrectCount`**`- integer` - how many times the _next_ word was answered incorrectly
+- **`answer`**`- string` - the English translation for _this_ word or phrase
+- **`isCorrect`**`- boolean` - true or false given if the correct guess was submitted for _this_ word
 
-Start the application `npm start`
+## Technology Stack
 
-Start nodemon for the application `npm run dev`
+### Backend
+- **Express** for handling API requests
+- **Knex.js** for interfacing with the **PostgreSQL** database
+- **Postgrator** for database migration
+- **Mocha**, **Chai**, **Supertest** for endpoints testing
+- **JSON Web Token**, **bcryptjs** for user authentication / authorization
 
-Run the tests mode `npm test`
+### Frontend
 
-Run the migrations up `npm run migrate`
-
-Run the migrations down `npm run migrate -- 0`
+- **React** + **React Router**, **HTML5**, **CSS3** for client-side view
+- **Cypress** for end-to-end testing
